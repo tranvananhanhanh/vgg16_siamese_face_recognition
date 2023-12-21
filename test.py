@@ -5,14 +5,14 @@ from model import L1Dist
 from dataset import test_data
 import numpy as np
 from data_for_train import preprocess
-# Đường dẫn đến tệp h5 của mô hình
+
 model_path = '/Users/jmac/Desktop/siamese/siamesemodel.h5'
 
 custom_objects = {'L1Dist': L1Dist}
 
 
 try:
-    # Tải mô hình từ tệp h5
+
     
     with custom_object_scope(custom_objects):
         model = load_model('/Users/jmac/Desktop/siamese/siamesemodel.h5',compile=True)
