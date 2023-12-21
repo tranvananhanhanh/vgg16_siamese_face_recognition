@@ -7,12 +7,11 @@ import numpy as np
 import tensorflow as tf
 
 from data_for_train import preprocess
-# Đường dẫn đến tệp h5 của mô hình
+
 model_path = '/Users/jmac/Desktop/siamese/siamesemodel.h5'
 
 custom_objects = {'L1Dist': L1Dist}
 try:
-    # Tải mô hình từ tệp h5
     
     with custom_object_scope(custom_objects):
         model = load_model('/Users/jmac/Desktop/siamese/siamesemodel.h5',compile=True)
@@ -29,7 +28,7 @@ print(test_input.shape)
 
 result = model.predict(list(np.expand_dims([test_input, test_val], axis=1)))
 print(result)
-
+#y_pred>0.5=1,<0.5=1
 y_pred = result*result
 print(y_pred)
 
