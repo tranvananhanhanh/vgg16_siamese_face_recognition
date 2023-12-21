@@ -9,9 +9,7 @@ from tensorflow.keras.layers import Activation
 
 from tensorflow.keras import backend as K
 
-# Hàm ReLU với ngưỡng 0.5
-def custom_relu(x):
-    return K.switch(x < 0.5, 1.0, 0.0)
+
 
 
 def layer_added(output_based_network):
@@ -34,11 +32,10 @@ for i, layer in enumerate(embedding.layers):
 
 class L1Dist(Layer):
     
-    # Init method - inheritance
     def __init__(self, **kwargs):
         super().__init__()
        
-    # Magic happens here - similarity calculation
+  
     def call(self, input_embedding, validation_embedding):
         return tf.math.abs(input_embedding - validation_embedding)
 
@@ -48,17 +45,17 @@ class L1Dist(Layer):
 
 def make_siamese_model(): 
     
-    # Anchor image input in the network
+ 
     input_image = Input(name='input_img', shape=(128,128,3))
     
-    # Validation image in the network 
+    
     validation_image = Input(name='validation_img', shape=(128,128,3))
     
-    # Combine siamese distance components
+    
     siamese_layer = L1Dist()
     siamese_layer._name = 'distance'
     distances = siamese_layer(embedding(input_image), embedding(validation_image))
-    # Classification layer 
+    
     classifier = Dense(1, activation='sigmoid')(distances)
     
     return Model(inputs=[input_image, validation_image], outputs=classifier, name='SiameseNetwork')
